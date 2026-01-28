@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Visual Identity (قريبة من ألوان الشعار: أخضر + أصفر + خلفية فاتحة) */
+:root {
+  --background: 113 40% 96%;
+  --foreground: 221 39% 11%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 221 39% 11%;
+
+  --primary: 120 37% 33%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 120 38% 56%;
+  --secondary-foreground: 221 39% 11%;
+
+  --accent: 48 91% 65%;
+  --accent-foreground: 221 39% 11%;
+
+  --muted: 113 25% 90%;
+  --muted-foreground: 215 16% 35%;
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 113 18% 84%;
+  --input: 113 18% 84%;
+  --ring: 120 37% 33%;
+
+  --radius: 1rem;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-background text-foreground antialiased;
+}
+
+* {
+  @apply border-border;
+}
+
+::selection {
+  background: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+}
