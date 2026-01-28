@@ -12,8 +12,8 @@ const cairo = Cairo({
 });
 
 export const metadata: Metadata = {
-  title: "أكاديمية القرآن المنير | تقديم المعلمين",
-  description: "صفحة تقديم المعلمين لأكاديمية القرآن المنير (نموذج متعدد الخطوات)."
+  title: "أكاديمية القرآن المنير | تقديم المشرفات",
+  description: "صفحة تقديم المشرفات لأكاديمية القرآن المنير (نموذج متعدد الخطوات)."
 };
 
 const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || "904011139242480";
