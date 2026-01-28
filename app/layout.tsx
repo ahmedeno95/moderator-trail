@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description: "صفحة تقديم المعلمين لأكاديمية القرآن المنير (نموذج متعدد الخطوات)."
 };
 
-const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || "739763442525643";
+const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || "904011139242480";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
