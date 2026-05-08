@@ -144,8 +144,6 @@ export function StepOne() {
   const agreeAll = watch("agree_all_conditions");
   const salary = watch("salary_acceptance");
   const daily = watch("daily_work_no_weekly_off");
-  const shiftHours = watch("shift_hours_acceptance");
-  const allDay = watch("all_day_availability");
   const tools = watch("can_use_tools");
 
   const blocked =
@@ -155,10 +153,6 @@ export function StepOne() {
       ? "يلزم الموافقة على الراتب لاستكمال التقديم."
       : daily && daily !== "موافقة"
       ? "يلزم الموافقة على نظام العمل اليومي (بدون إجازة أسبوعية)."
-      : shiftHours && shiftHours !== "موافقة وأستطيع التواجد طول فترة الشيفت"
-      ? "يلزم الموافقة على التواجد طوال فترة الشيفت."
-      : allDay && allDay !== "متفرغة تماما طول فترة الشيفت"
-      ? "يشترط التفرغ التام خلال فترة الشيفت للرد على الرسائل ومتابعة الحلقات."
       : tools && tools !== "نعم"
       ? "يشترط القدرة على التعامل مع ZOOM و Google Meet."
       : null;
@@ -395,10 +389,10 @@ export function StepThree() {
 export function StepFour() {
   return (
     <div className="space-y-6">
-      <FieldBlock name="agree_no_stopping_policy" label="1) شرط عدم التوقف قبل 6 أشهر">
+      <FieldBlock name="final_agree_no_stopping_policy" label="1) تأكيد: شرط عدم التوقف قبل 6 أشهر">
         <AgreementCheckbox
-          name="agree_no_stopping_policy"
-          label="أوافق على هذا الشرط:"
+          name="final_agree_no_stopping_policy"
+          label="أوافق على هذا الشرط النهائي:"
           policyText={NO_STOPPING_POLICY}
           acceptedValue="موافقة"
         />
