@@ -43,6 +43,7 @@ export function FormWizard() {
       agree_all_conditions: "",
       salary_acceptance: "",
       daily_work_no_weekly_off: "",
+      shift_hours_acceptance: "", // <-- الحقل الجديد
       all_day_availability: "",
       can_use_tools: "",
       agree_no_stopping_policy: "",
@@ -60,12 +61,9 @@ export function FormWizard() {
       current_job_and_hours: "",
       previous_jobs: "",
       agree_attend_trial_sessions: "",
-      internet_stability: "",
-
-      // Step 4
-      why_choose_you: "",
-      supervision_role_idea: "",
-      convince_parent_message: ""
+      internet_stability: ""
+      
+      // تم مسح حقول Step 4 القديمة من هنا
     }
   });
 
