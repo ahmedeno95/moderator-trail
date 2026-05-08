@@ -24,7 +24,7 @@ const stepsMeta = [
   { title: "الشروط والالتزام", description: "تأكيد المتطلبات الأساسية" },
   { title: "البيانات الشخصية", description: "معلومات التواصل" },
   { title: "خبرات العمل", description: "أسئلة عن الخبرة والدوام" },
-  { title: "أسئلة تمييزية", description: "طريقة التفكير والتواصل" }
+  { title: "تأكيد أخير", description: "سياسة الأكاديمية" }
 ];
 
 export function FormWizard() {
@@ -43,7 +43,7 @@ export function FormWizard() {
       agree_all_conditions: "",
       salary_acceptance: "",
       daily_work_no_weekly_off: "",
-      shift_hours_acceptance: "", // <-- الحقل الجديد
+      shift_hours_acceptance: "",
       all_day_availability: "",
       can_use_tools: "",
       agree_no_stopping_policy: "",
@@ -61,9 +61,10 @@ export function FormWizard() {
       current_job_and_hours: "",
       previous_jobs: "",
       agree_attend_trial_sessions: "",
-      internet_stability: ""
-      
-      // تم مسح حقول Step 4 القديمة من هنا
+      internet_stability: "",
+
+      // Step 4
+      final_agree_no_stopping_policy: ""
     }
   });
 
