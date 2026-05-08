@@ -45,8 +45,6 @@ export const whatsappRegex = /^\+?[0-9]{10,15}$/;
 
 /**
  * ✅ Server + Client shared schema
- * - Note: Zod output types:
- * age becomes number after transform
  */
 export const TeacherApplicationSchema = z.object({
   /* -------------------- Step 2: بيانات شخصية -------------------- */
@@ -86,14 +84,9 @@ export const TeacherApplicationSchema = z.object({
     message: "يلزم الموافقة على نظام العمل اليومي (بدون إجازة أسبوعية)."
   }),
 
-  shift_hours_acceptance: requiredChoice("مواعيد الشيفت").refine((v) => v === "موافقة وأستطيع التواجد طول فترة الشيفت", {
-    message: "يلزم الموافقة على التواجد طوال فترة الشيفت لاستكمال التقديم."
-  }),
+  shift_hours_acceptance: requiredChoice("مواعيد الشيفت"),
 
-  all_day_availability: requiredChoice("التفرغ خلال الشيفت").refine(
-    (v) => v === "متفرغة تماما طول فترة الشيفت",
-    { message: "يشترط التفرغ التام خلال فترة الشيفت." }
-  ),
+  all_day_availability: requiredChoice("التفرغ خلال الشيفت"),
 
   can_use_tools: requiredChoice("ZOOM + Google Meet").refine((v) => v === "نعم", {
     message: "يشترط القدرة على التعامل مع ZOOM و Google Meet."
@@ -104,11 +97,11 @@ export const TeacherApplicationSchema = z.object({
   }),
 
   /* -------------------- Step 3: خبرات العمل الأساسية -------------------- */
-  supervision_experience_details: required("هل تم العمل قبل ذلك في الإشراف وما هي المهام التي كنتِ تقومين بها؟", 10),
+  supervision_experience_details: required("هل تم العمل قبل ذلك في الإشراف وما هي المهام التي كنتِ تقومين بها؟", 1),
 
-  current_job_and_hours: required("الوظيفة الحالية وأوقات العمل", 5),
+  current_job_and_hours: required("الوظيفة الحالية وأوقات العمل", 1),
 
-  previous_jobs: required("الوظائف السابقة", 5),
+  previous_jobs: required("الوظائف السابقة", 1),
 
   agree_attend_trial_sessions: requiredChoice("حضور الحصص التجريبية").refine((v) => v === "موافقة", {
     message: "يلزم الموافقة على حضور الحصص التجريبية لتقييم الحلقات."
@@ -116,18 +109,18 @@ export const TeacherApplicationSchema = z.object({
 
   internet_stability: requiredChoice("الإنترنت المستقر").refine(
     (v) => ["واي فاي منزلي (Wi-Fi)", "باقة بيانات (Data)", "كلاهما"].includes(v),
-    { message: "من فضلك اختاري نوع الإنترنت من الخيارات."
-  })
+    { message: "من فضلك اختاري نوع الإنترنت من الخيارات." }
+  ),
 
-  /* -------------------- Step 4: أسئلة تمييزية (تم الحذف بناءً على طلبك) -------------------- */
+  /* -------------------- Step 4: تأكيد أخير -------------------- */
+  final_agree_no_stopping_policy: requiredChoice("تأكيد شرط عدم التوقف").refine((v) => v === "موافقة", {
+    message: "يلزم تأكيد الموافقة على هذا الشرط لاستكمال الإرسال."
+  })
 });
 
 export type TeacherApplicationFormInput = z.input<typeof TeacherApplicationSchema>;
 export type TeacherApplicationFormOutput = z.output<typeof TeacherApplicationSchema>;
 
-/**
- * Used by the wizard to validate only the current step before moving next.
- */
 export const stepFields = [
   // Step 1
   [
@@ -150,5 +143,5 @@ export const stepFields = [
     "internet_stability"
   ],
   // Step 4
-  ["agree_no_stopping_policy"]
+  ["final_agree_no_stopping_policy"]
 ] as const;
