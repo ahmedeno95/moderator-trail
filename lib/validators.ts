@@ -46,7 +46,7 @@ export const whatsappRegex = /^\+?[0-9]{10,15}$/;
 /**
  * ✅ Server + Client shared schema
  * - Note: Zod output types:
- *    age becomes number after transform
+ * age becomes number after transform
  */
 export const TeacherApplicationSchema = z.object({
   /* -------------------- Step 2: بيانات شخصية -------------------- */
@@ -86,9 +86,13 @@ export const TeacherApplicationSchema = z.object({
     message: "يلزم الموافقة على نظام العمل اليومي (بدون إجازة أسبوعية)."
   }),
 
-  all_day_availability: requiredChoice("التواجد طوال اليوم").refine(
-    (v) => v === "متفرغة وأستطيع التواجد والعمل على مدار اليوم",
-    { message: "يشترط التواجد للرد على الرسائل ومتابعة دخول الحلقات على مدار اليوم." }
+  shift_hours_acceptance: requiredChoice("مواعيد الشيفت").refine((v) => v === "موافقة وأستطيع التواجد طول فترة الشيفت", {
+    message: "يلزم الموافقة على التواجد طوال فترة الشيفت لاستكمال التقديم."
+  }),
+
+  all_day_availability: requiredChoice("التفرغ خلال الشيفت").refine(
+    (v) => v === "متفرغة تماما طول فترة الشيفت",
+    { message: "يشترط التفرغ التام خلال فترة الشيفت." }
   ),
 
   can_use_tools: requiredChoice("ZOOM + Google Meet").refine((v) => v === "نعم", {
@@ -113,14 +117,9 @@ export const TeacherApplicationSchema = z.object({
   internet_stability: requiredChoice("الإنترنت المستقر").refine(
     (v) => ["واي فاي منزلي (Wi-Fi)", "باقة بيانات (Data)", "كلاهما"].includes(v),
     { message: "من فضلك اختاري نوع الإنترنت من الخيارات."
-  }),
+  })
 
-  /* -------------------- Step 4: أسئلة تمييزية -------------------- */
-  why_choose_you: required("ما الذي يُميزك عن غيرك لنختارك للعمل معنا؟", 10),
-
-  supervision_role_idea: required("ما هي فكرتك عن عمل الإشراف أو عن مهامه؟", 10),
-
-  convince_parent_message: required("رسالة لإقناع والدة بتجربة حلقة أونلاين", 20)
+  /* -------------------- Step 4: أسئلة تمييزية (تم الحذف بناءً على طلبك) -------------------- */
 });
 
 export type TeacherApplicationFormInput = z.input<typeof TeacherApplicationSchema>;
@@ -135,6 +134,7 @@ export const stepFields = [
     "agree_all_conditions",
     "salary_acceptance",
     "daily_work_no_weekly_off",
+    "shift_hours_acceptance",
     "all_day_availability",
     "can_use_tools",
     "agree_no_stopping_policy"
@@ -150,5 +150,5 @@ export const stepFields = [
     "internet_stability"
   ],
   // Step 4
-  ["why_choose_you", "supervision_role_idea", "convince_parent_message", "agree_no_stopping_policy"]
+  ["agree_no_stopping_policy"]
 ] as const;
