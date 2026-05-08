@@ -144,6 +144,7 @@ export function StepOne() {
   const agreeAll = watch("agree_all_conditions");
   const salary = watch("salary_acceptance");
   const daily = watch("daily_work_no_weekly_off");
+  const shiftHours = watch("shift_hours_acceptance");
   const allDay = watch("all_day_availability");
   const tools = watch("can_use_tools");
 
@@ -154,8 +155,10 @@ export function StepOne() {
       ? "يلزم الموافقة على الراتب لاستكمال التقديم."
       : daily && daily !== "موافقة"
       ? "يلزم الموافقة على نظام العمل اليومي (بدون إجازة أسبوعية)."
-      : allDay && allDay !== "متفرغة وأستطيع التواجد والعمل على مدار اليوم"
-      ? "يشترط التواجد طوال اليوم للرد على الرسائل ومتابعة دخول الحلقات."
+      : shiftHours && shiftHours !== "موافقة وأستطيع التواجد طول فترة الشيفت"
+      ? "يلزم الموافقة على التواجد طوال فترة الشيفت."
+      : allDay && allDay !== "متفرغة تماما طول فترة الشيفت"
+      ? "يشترط التفرغ التام خلال فترة الشيفت للرد على الرسائل ومتابعة الحلقات."
       : tools && tools !== "نعم"
       ? "يشترط القدرة على التعامل مع ZOOM و Google Meet."
       : null;
@@ -215,21 +218,32 @@ export function StepOne() {
         />
       </FieldBlock>
 
-      <FieldBlock
-        name="all_day_availability"
-        label="4) يشترط التواجد على مدار اليوم للرد على الرسائل ومتابعة دخول الحلقات"
-      >
+      <FieldBlock name="shift_hours_acceptance" label="4) عمل الإشراف من الساعة 8 صباحا للساعة 12 منتصف الليل">
         <RadioCards
-          name="all_day_availability"
+          name="shift_hours_acceptance"
           options={[
-            { label: "متفرغة وأستطيع التواجد والعمل على مدار اليوم", value: "متفرغة وأستطيع التواجد والعمل على مدار اليوم" },
-            { label: "لا أستطيع ذلك", value: "لا أستطيع ذلك" }
+            { label: "موافقة وأستطيع التواجد طول فترة الشيفت", value: "موافقة وأستطيع التواجد طول فترة الشيفت" },
+            { label: "لا أستطيع التواجد طول هذه المدة لانشغالي ببعض الأمور", value: "لا أستطيع التواجد طول هذه المدة لانشغالي ببعض الأمور" }
           ]}
           columns={1}
         />
       </FieldBlock>
 
-      <FieldBlock name="can_use_tools" label="5) هل تستطيعين التعامل مع ZOOM + Google meet ؟">
+      <FieldBlock
+        name="all_day_availability"
+        label="5) هل لديك شيء يشغلك في فترة الشيفت مثل كورس أو عمل أو غير ذلك"
+      >
+        <RadioCards
+          name="all_day_availability"
+          options={[
+            { label: "نعم لدي بعض الأشغال", value: "نعم لدي بعض الأشغال" },
+            { label: "متفرغة تماما طول فترة الشيفت", value: "متفرغة تماما طول فترة الشيفت" }
+          ]}
+          columns={1}
+        />
+      </FieldBlock>
+
+      <FieldBlock name="can_use_tools" label="6) هل تستطيعين التعامل مع ZOOM + Google meet ؟">
         <RadioCards
           name="can_use_tools"
           options={[
@@ -241,7 +255,7 @@ export function StepOne() {
 
       <FieldBlock
         name="agree_no_stopping_policy"
-        label="6) تمنع الأكاديمية التوقف قبل 6 أشهر من بدء العمل وتمنع التوقف المفاجئ..."
+        label="7) تمنع الأكاديمية التوقف قبل 6 أشهر من بدء العمل وتمنع التوقف المفاجئ..."
       >
         <AgreementCheckbox
           name="agree_no_stopping_policy"
@@ -379,48 +393,9 @@ export function StepThree() {
 
 /* -------------------- STEP 4 -------------------- */
 export function StepFour() {
-  const { register } = useFormContext<TeacherApplicationFormInput>();
-
   return (
     <div className="space-y-6">
-      <FieldBlock name="why_choose_you" label="5) ما الذي يُميزك عن غيرك لنختارك للعمل معنا؟">
-        <Textarea id="why_choose_you" rows={4} placeholder="اكتبي إجابتك هنا..." {...register("why_choose_you")} />
-      </FieldBlock>
-
-      <FieldBlock name="supervision_role_idea" label="6) ما هي فكرتك عن عمل الإشراف أو عن مهامه؟">
-        <Textarea
-          id="supervision_role_idea"
-          rows={5}
-          placeholder="اكتبي فكرتك باختصار ووضوح..."
-          {...register("supervision_role_idea")}
-        />
-      </FieldBlock>
-
-      <FieldBlock
-        name="convince_parent_message"
-        wrapperClassName="rounded-2xl border-2 border-blue-500 bg-blue-50/80 p-4"
-        labelClassName="text-base font-extrabold text-blue-800"
-        label={
-          <span className="block space-y-2 leading-relaxed">
-            <span className="block">
-              7) والدة لا تريد أن تعطي لابنها تحفيظ أونلاين لأنه لن يكون الأفضل له الأونلاين لصغر سنه.
-              اكتبي رسالة لإقناعها بأن تجرب معنا حلقة أونلاين
-            </span>
-            <span className="block text-sm font-semibold text-foreground">هذا السؤال مهم في التمييز بين المتقدمات.</span>
-            <span className="block text-sm font-normal text-foreground/80">(الرد بالفصحى فقط وليس بالعامية) • (تجنبي الأخطاء الإملائية)</span>
-          </span>
-        }
-      >
-        <Textarea
-          id="convince_parent_message"
-          rows={8}
-          placeholder="اكتبي رسالتك بالفصحى..."
-          className="rounded-2xl border-2 border-dashed border-blue-500 bg-white/90 !px-4 !py-3 !text-base leading-relaxed shadow-sm focus-visible:ring-2 focus-visible:ring-blue-300/40"
-          {...register("convince_parent_message")}
-        />
-      </FieldBlock>
-
-      <FieldBlock name="agree_no_stopping_policy" label="8) شرط عدم التوقف قبل 6 أشهر">
+      <FieldBlock name="agree_no_stopping_policy" label="1) شرط عدم التوقف قبل 6 أشهر">
         <AgreementCheckbox
           name="agree_no_stopping_policy"
           label="أوافق على هذا الشرط:"
